@@ -7,6 +7,7 @@ public class PlayerController : MonoBehaviour
     public Animator animator;
 
     CharacterController characterController;
+    weaponController weaponController;
 
 
     // Movement Variables
@@ -21,10 +22,10 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         characterController = GetComponent<CharacterController>();
-       
+        weaponController = GetComponentInChildren<weaponController>();
     }
 
-    void MoveCharacter()
+    IEnumerator MoveCharacter()
     {
         if (characterController.isGrounded)
         {
@@ -47,12 +48,14 @@ public class PlayerController : MonoBehaviour
 
             if (Input.GetKeyDown(KeyCode.F) && !Input.GetKeyDown(KeyCode.W))
             {
-                animator.SetBool("Attack", true);
+                //animator.SetBool("Attack", true);
+                animator.Play("Sword Slash");
+                weaponController.IsAttacked(true);
+                yield return new WaitForSeconds(1.4f);
+                weaponController.IsAttacked(false);
             }
-            else if (Input.GetKeyUp(KeyCode.F))
-            {
-                animator.SetBool("Attack", false);
-            }
+ 
+
         }
 
         // Apply gravity. Gravity is multiplied by deltaTime twice (once here, and once below
@@ -61,12 +64,14 @@ public class PlayerController : MonoBehaviour
         moveDirection.y -= gravity * Time.deltaTime;
         // Move the controller
         characterController.Move(moveDirection * Time.deltaTime);
-        }
+
+        yield break;
+    }
 
     // Update is called once per frame
     void Update()
     {
-        MoveCharacter();
+        StartCoroutine (MoveCharacter());
         
     }
 }
