@@ -3,13 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class weaponController : MonoBehaviour
+public class WeaponController : MonoBehaviour
 {
+    public GameObject scoreBox; 
     private bool _attackFlag = false;
+    private ScoreContoller _scoreController; 
+    
     // Start is called before the first frame update
     void Start()
     {
-        Debug.Log("start");
+        _scoreController = scoreBox.GetComponent<ScoreContoller>();
     }
 
     public void IsAttacked(bool attacked)
@@ -24,9 +27,15 @@ public class weaponController : MonoBehaviour
             if (other.tag == "Enemy")
             {
                 var anim = other.GetComponent<Animator>();
+                if (other.GetComponent<NavMeshAgent>().enabled == true)
+                {
+                    _scoreController.AddScore();
+                }
                 other.GetComponent<NavMeshAgent>().enabled = false;
                 anim.SetTrigger("Death");
                 Debug.Log("collision detected with " + other.name);
+                
+                
                 _attackFlag = false;
             }
             

@@ -7,7 +7,7 @@ public class PlayerController : MonoBehaviour
     public Animator animator;
 
     CharacterController characterController;
-    weaponController weaponController;
+    WeaponController weaponController;
 
 
     // Movement Variables
@@ -15,6 +15,7 @@ public class PlayerController : MonoBehaviour
     public float rotSpeed = 100.0f;
     public float gravity = 20.0f;
     private Vector3 moveDirection = Vector3.zero;
+    private bool _attacking = false;
 
    
     
@@ -22,7 +23,7 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         characterController = GetComponent<CharacterController>();
-        weaponController = GetComponentInChildren<weaponController>();
+        weaponController = GetComponentInChildren<WeaponController>();
     }
 
     IEnumerator MoveCharacter()
@@ -36,7 +37,7 @@ public class PlayerController : MonoBehaviour
             moveDirection = transform.TransformDirection(moveDirection);
             moveDirection *= speed;
 
-            if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.S))
+            if ((Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.S)))
             {
                 animator.SetBool("Run", true);
                 animator.SetBool("Attack", false);
@@ -50,9 +51,11 @@ public class PlayerController : MonoBehaviour
             {
                 //animator.SetBool("Attack", true);
                 animator.Play("Sword Slash");
-                weaponController.IsAttacked(true);
-                yield return new WaitForSeconds(1.4f);
-                weaponController.IsAttacked(false);
+                _attacking = true;
+                weaponController.IsAttacked(_attacking);
+                yield return new WaitForSeconds(1.5f);
+                _attacking = false;
+                weaponController.IsAttacked(_attacking);
             }
  
 
@@ -63,8 +66,10 @@ public class PlayerController : MonoBehaviour
         // as an acceleration (ms^-2)
         moveDirection.y -= gravity * Time.deltaTime;
         // Move the controller
-        characterController.Move(moveDirection * Time.deltaTime);
-
+        if (!_attacking)
+        {
+            characterController.Move(moveDirection * Time.deltaTime);
+        }
         yield break;
     }
 

@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 64647326316515816}
   - component: {fileID: 2734667643124304386}
   - component: {fileID: 4227236718465468257}
+  - component: {fileID: 7181508955574854420}
   m_Layer: 0
   m_Name: SM_Wep_Odachi_01
   m_TagString: Untagged
@@ -123,3 +124,16 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &7181508955574854420
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 184202}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b4889cd00b3bc5c40ae8bf284fc4e499, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scoreBox: {fileID: 0}

@@ -15,7 +15,7 @@ namespace UnityStandardAssets.Utility
         // (Think: looking out the side window of a car, or a gun turret
         // on a moving spaceship with a limited angular range)
         // to have no constraints on an axis, set the rotationRange to 360 or greater.
-        public Vector2 rotationRange = new Vector3(360, 780);
+        public Vector2 rotationRange = new Vector3(780, 780);
         public float rotationSpeed = 10;
         public float dampingTime = 0.2f;
         public bool autoZeroVerticalOnMobile = true;
