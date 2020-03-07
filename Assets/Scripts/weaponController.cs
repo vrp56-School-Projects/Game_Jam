@@ -5,9 +5,11 @@ using UnityEngine.AI;
 
 public class WeaponController : MonoBehaviour
 {
-    public GameObject scoreBox; 
+    public GameObject scoreBox;
     private bool _attackFlag = false;
-    private ScoreContoller _scoreController; 
+    private ScoreContoller _scoreController;
+    [SerializeField]
+    private AudioSource _scream;
     
     // Start is called before the first frame update
     void Start()
@@ -30,6 +32,7 @@ public class WeaponController : MonoBehaviour
                 if (other.GetComponent<NavMeshAgent>().enabled == true)
                 {
                     _scoreController.AddScore();
+                    _scream.PlayOneShot(_scream.clip);
                 }
                 other.GetComponent<NavMeshAgent>().enabled = false;
                 anim.SetTrigger("Death");
